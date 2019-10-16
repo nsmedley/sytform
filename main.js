@@ -3,8 +3,9 @@ $(function () {
     detailsProgressiveDisclosure();
     //timeZoneDetect();
     timeZoneManual();
+    stepper();
     welcomeCallCalendar();
-    formValidation();
+    //formValidation();
 });
 
 
@@ -59,23 +60,27 @@ function timeZoneManual() {
 }
 
 function stepper() {
-    if ($(this).data('step') === "details") {
-        $('.setupForm__details').slideUp(500, function () {
-            $('.setupForm__call').slideDown(300);
-            $('.headerStep--step1 .headerStep__circle').removeClass('headerStep__circle--active').addClass('headerStep__circle--complete');
-            $('.headerStep--step2 .headerStep__circle').addClass('headerStep__circle--active');
-            $('.header__lineMarker').addClass('header__lineMarker--step2').removeClass('header__lineMarker--step1');
-            $('.header__title').html('Now let’s arrange a Welcome Call between you and your Moneypenny Receptionist. We’ll hand-pick your receptionist based on what you’ve told us about your business. It’s the perfect time to get to know them and explain how you like to work and the way you’d like calls to be answered:');
-        });
-    } else if ($(this).data('step') === "calls") {
-        $('.setupForm__call').slideUp(500, function () {
-            $('.setupForm__confirmation').slideDown(300);
-            $('.headerStep--step2 .headerStep__circle').removeClass('headerStep__circle--active').addClass('headerStep__circle--complete');
-            $('.headerStep--step3 .headerStep__circle').addClass('headerStep__circle--active');
-            $('.header__lineMarker').addClass('header__lineMarker--step3').removeClass('header__lineMarker--step2');
-            $('.header__title').html('Thank you');
-        });
-    }
+    $(".setupForm__nextBtn").click(function () {
+
+        if ($(this).data('step') === "details") {
+            $('.setupForm__details').slideUp(500, function () {
+                $('.setupForm__call').slideDown(300);
+                $('.headerStep--step1 .headerStep__circle').removeClass('headerStep__circle--active').addClass('headerStep__circle--complete');
+                $('.headerStep--step2 .headerStep__circle').addClass('headerStep__circle--active');
+                $('.header__lineMarker').addClass('header__lineMarker--step2').removeClass('header__lineMarker--step1');
+                $('.header__title').html('Now let’s arrange a Welcome Call between you and your Moneypenny Receptionist. We’ll hand-pick your receptionist based on what you’ve told us about your business. It’s the perfect time to get to know them and explain how you like to work and the way you’d like calls to be answered:');
+            });
+        } else if ($(this).data('step') === "calls") {
+            $('.setupForm__call').slideUp(500, function () {
+                $('.setupForm__confirmation').slideDown(300);
+                $('.headerStep--step2 .headerStep__circle').removeClass('headerStep__circle--active').addClass('headerStep__circle--complete');
+                $('.headerStep--step3 .headerStep__circle').addClass('headerStep__circle--active');
+                $('.header__lineMarker').addClass('header__lineMarker--step3').removeClass('header__lineMarker--step2');
+                $('.header__title').html('Thank you');
+            });
+        }
+
+    });
 }
 
 function welcomeCallCalendar() {
@@ -91,7 +96,7 @@ function formValidation() {
         var form = $(".setupForm");
 
         form.validate({
-            debug: true,
+            debug: false,
             errorElement: 'span',
             errorClass: 'detailsFormField__errorMsg',
             highlight: function (element, errorClass, validClass) {
