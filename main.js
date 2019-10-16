@@ -20,39 +20,35 @@ function detailsProgressiveDisclosure() {
 };
 
 function timeZoneDetect() {
-
-    control.listen("populate", function (address, variations) {
-
-        console.log('State change');
-        state = $(this).val();
-        console.log('State = ' + state);
-        if (state.match("^AL|^AR|^IL|^IA|^KS|^KY|^LA|^MN|^MS|^MO|^NE|^ND|^OK|^TN|^TX|^WI")) {
-            // CST
-            $('#timezone2').prop('checked', true);
-            $('.detailsFormField--radioSelected').removeClass('detailsFormField--radioSelected');
-            $('#timezone2').parent().addClass('detailsFormField--radioSelected');
-        } else if (state.match("^AK")) {
-            // AK
-            $('#timezone1').prop('checked', true);
-        } else if (state.match("^AZ|^CO|^ID|^MT|^NM|^UT|^WY")) {
-            // MST
-            $('#timezone5').prop('checked', true);
-        } else if (state.match("^CA|^NV|^OR|^WA")) {
-            // PST
-            $('#timezone6').prop('checked', true);
-        } else if (state.match("^CT|^DE|^FL|^GA|^IN|^ME|^MD|^MA|^MI|^NH|^NJ|^NY|^NC|^OH|^PA|^RI|^SC|^VT|^VA|^WV")) {
-            // EST
-            $('#timezone3').prop('checked', true);
-        } else if (state.match("^HI")) {
-            // HST
-            $('#timezone4').prop('checked', true);
-        }
-        console.log('Value selected');
-
-
+    pca.on("load", function (type, id, control) {
+        control.listen("populate", function (address) {
+            console.log('State change');
+            state = $('#addressState').val();
+            console.log('State = ' + state);
+            if (state.match("^AL|^AR|^IL|^IA|^KS|^KY|^LA|^MN|^MS|^MO|^NE|^ND|^OK|^TN|^TX|^WI")) {
+                // CST
+                $('#timezone2').prop('checked', true);
+                $('.detailsFormField--radioSelected').removeClass('detailsFormField--radioSelected');
+                $('#timezone2').parent().addClass('detailsFormField--radioSelected');
+            } else if (state.match("^AK")) {
+                // AK
+                $('#timezone1').prop('checked', true);
+            } else if (state.match("^AZ|^CO|^ID|^MT|^NM|^UT|^WY")) {
+                // MST
+                $('#timezone5').prop('checked', true);
+            } else if (state.match("^CA|^NV|^OR|^WA")) {
+                // PST
+                $('#timezone6').prop('checked', true);
+            } else if (state.match("^CT|^DE|^FL|^GA|^IN|^ME|^MD|^MA|^MI|^NH|^NJ|^NY|^NC|^OH|^PA|^RI|^SC|^VT|^VA|^WV")) {
+                // EST
+                $('#timezone3').prop('checked', true);
+            } else if (state.match("^HI")) {
+                // HST
+                $('#timezone4').prop('checked', true);
+            }
+            console.log('Value selected');
+        });
     });
-
-
 };
 
 function timeZoneManual() {
