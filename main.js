@@ -1,11 +1,10 @@
 $(function () {
 
     detailsProgressiveDisclosure();
-    //timeZoneDetect();
+    timeZoneDetect();
     timeZoneManual();
-    stepper();
     welcomeCallCalendar();
-    //formValidation();
+    formValidation();
 });
 
 
@@ -18,34 +17,46 @@ function detailsProgressiveDisclosure() {
         $('.setupForm__nextBtn').removeClass('setupForm__nextBtn--inactive');
     });
 
+    pca.on("load", function (type, id, control) {
+        control.listen("populate", function (address) {
+            $('.detailsFormField--hidden').slideDown(500);
+            $('.detailsForm__seperator--hidden').slideDown(500);
+            $('.detailsForm__title--hidden').slideDown(500);
+            $('.setupForm__nextBtn').removeClass('setupForm__nextBtn--inactive');
+        });
+    });
+
 };
 
 function timeZoneDetect() {
     pca.on("load", function (type, id, control) {
         control.listen("populate", function (address) {
-            console.log('State change');
             state = $('#addressState').val();
-            console.log('State = ' + state);
+            $('.detailsFormField--radioSelected').removeClass('detailsFormField--radioSelected');
             if (state.match("^AL|^AR|^IL|^IA|^KS|^KY|^LA|^MN|^MS|^MO|^NE|^ND|^OK|^TN|^TX|^WI")) {
                 // CST
                 $('#timezone2').prop('checked', true);
-                $('.detailsFormField--radioSelected').removeClass('detailsFormField--radioSelected');
                 $('#timezone2').parent().addClass('detailsFormField--radioSelected');
             } else if (state.match("^AK")) {
                 // AK
                 $('#timezone1').prop('checked', true);
+                $('#timezone1').parent().addClass('detailsFormField--radioSelected');
             } else if (state.match("^AZ|^CO|^ID|^MT|^NM|^UT|^WY")) {
                 // MST
                 $('#timezone5').prop('checked', true);
+                $('#timezone5').parent().addClass('detailsFormField--radioSelected');
             } else if (state.match("^CA|^NV|^OR|^WA")) {
                 // PST
                 $('#timezone6').prop('checked', true);
+                $('#timezone6').parent().addClass('detailsFormField--radioSelected');
             } else if (state.match("^CT|^DE|^FL|^GA|^IN|^ME|^MD|^MA|^MI|^NH|^NJ|^NY|^NC|^OH|^PA|^RI|^SC|^VT|^VA|^WV")) {
                 // EST
                 $('#timezone3').prop('checked', true);
+                $('#timezone3').parent().addClass('detailsFormField--radioSelected');
             } else if (state.match("^HI")) {
                 // HST
                 $('#timezone4').prop('checked', true);
+                $('#timezone4').parent().addClass('detailsFormField--radioSelected');
             }
             console.log('Value selected');
         });
@@ -61,7 +72,6 @@ function timeZoneManual() {
 
 function stepper() {
     $(".setupForm__nextBtn").click(function () {
-
         if ($(this).data('step') === "details") {
             $('.setupForm__details').slideUp(500, function () {
                 $('.setupForm__call').slideDown(300);
@@ -79,7 +89,6 @@ function stepper() {
                 $('.header__title').html('Thank you');
             });
         }
-
     });
 }
 
@@ -96,7 +105,7 @@ function formValidation() {
         var form = $(".setupForm");
 
         form.validate({
-            debug: false,
+            debug: true,
             errorElement: 'span',
             errorClass: 'detailsFormField__errorMsg',
             highlight: function (element, errorClass, validClass) {
