@@ -83,8 +83,6 @@ function welcomeCallCalendar() {
 
 function formValidation() {
     $(".setupForm__nextBtn").click(function () {
-        formValidationSettings();
-
         if (form.valid() === true) {
             stepper();
         }
