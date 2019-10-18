@@ -1,37 +1,19 @@
-$(function () {
+var form = $(".setupForm");
 
-    detailsProgressiveDisclosure();
+$(function () {
     timeZoneDetect();
     timeZoneManual();
     welcomeCallCalendar();
     formValidation();
+    formValidationSettings();
+    floatingLabels();
+    detailsProgressiveDisclosure();
 });
-
-
-function detailsProgressiveDisclosure() {
-
-    $('.detailsForm__btn--manual').click(function () {
-        $('.detailsFormField--hidden').slideDown(500);
-        $('.detailsForm__seperator--hidden').slideDown(500);
-        $('.detailsForm__title--hidden').slideDown(500);
-        $('.setupForm__nextBtn').removeClass('setupForm__nextBtn--inactive');
-    });
-
-    pca.on("load", function (type, id, control) {
-        control.listen("populate", function (address) {
-            $('.detailsFormField--hidden').slideDown(500);
-            $('.detailsForm__seperator--hidden').slideDown(500);
-            $('.detailsForm__title--hidden').slideDown(500);
-            $('.setupForm__nextBtn').removeClass('setupForm__nextBtn--inactive');
-        });
-    });
-
-};
 
 function timeZoneDetect() {
     pca.on("load", function (type, id, control) {
         control.listen("populate", function (address) {
-            state = $('#addressState').val();
+            state = $('#state').val();
             $('.detailsFormField--radioSelected').removeClass('detailsFormField--radioSelected');
             if (state.match("^AL|^AR|^IL|^IA|^KS|^KY|^LA|^MN|^MS|^MO|^NE|^ND|^OK|^TN|^TX|^WI")) {
                 // CST
@@ -58,7 +40,6 @@ function timeZoneDetect() {
                 $('#timezone4').prop('checked', true);
                 $('#timezone4').parent().addClass('detailsFormField--radioSelected');
             }
-            console.log('Value selected');
         });
     });
 };
@@ -102,37 +83,7 @@ function welcomeCallCalendar() {
 
 function formValidation() {
     $(".setupForm__nextBtn").click(function () {
-        var form = $(".setupForm");
-
-        form.validate({
-            debug: true,
-            errorElement: 'span',
-            errorClass: 'detailsFormField__errorMsg',
-            highlight: function (element, errorClass, validClass) {
-                $(element).removeClass('detailsFormField__input--valid').addClass('detailsFormField__input--invalid');
-            },
-            unhighlight: function (element, errorClass, validClass) {
-                $(element).removeClass('detailsFormField__input--invalid').addClass('detailsFormField__input--valid');
-            },
-            rules: {
-                name: "required",
-                email: "required",
-                telephone: "required",
-                company: "required",
-                website: "required",
-                addressLine1: "required",
-                addressCity: "required",
-                addressState: "required",
-                addressZipCode: "required"
-            },
-            messages: {
-                name: "Please enter your name",
-                email: "Please enter your email address",
-                telephone: "Please enter your business telephone number",
-                company: "Please enter your company name",
-                website: "Please eneter your website"
-            }
-        });
+        formValidationSettings();
 
         if (form.valid() === true) {
             stepper();
@@ -140,6 +91,77 @@ function formValidation() {
     });
 }
 
-function floatingLabels() {
+function formValidationSettings() {
+    form.validate({
+        ignore: ".ignore, :hidden",
+        errorElement: 'span',
+        errorClass: 'detailsFormField__errorMsg',
+        highlight: function (element, errorClass, validClass) {
+            $(element).removeClass('detailsFormField__input--valid').addClass('detailsFormField__input--invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('detailsFormField__input--invalid').addClass('detailsFormField__input--valid');
+        },
+        rules: {
+            name: "required",
+            email: {
+                required: true,
+                email: true
+            },
+            telephone: {
+                required: true,
+                phoneUS: true
+            },
+            company: "required",
+            website: "required",
+            addressLine1: "required",
+            addressCity: "required",
+            addressState: "required",
+            addressZipCode: "required"
+        },
+        messages: {
+            name: "Please enter your name",
+            email: "Please enter your email address",
+            telephone: "Please enter your business telephone number",
+            company: "Please enter your company name",
+            website: "Please eneter your website"
+        }
+    });
 
 }
+
+function floatingLabels() {
+    $("input").focusout(function () {
+        var fieldName = $(this).attr("name");
+        if ($(this).val() === "") {
+            $("label[for='" + fieldName + "']").removeClass("detailsFormField__label--stay");
+        } else {
+            $("label[for='" + fieldName + "']").addClass("detailsFormField__label--stay");
+        }
+    });
+}
+
+function detailsProgressiveDisclosure() {
+
+    $('.detailsForm__btn--manual').click(function () {
+        $('.detailsFormField--hidden').slideDown(500);
+        $('.detailsForm__seperator--hidden').slideDown(500);
+        $('.detailsForm__title--hidden').slideDown(500);
+        $('.setupForm__nextBtn').removeClass('setupForm__nextBtn--inactive');
+    });
+
+    pca.on("load", function (type, id, control) {
+        control.listen("populate", function (address) {
+            $('input[name=address]').parent().add('.manualOr').add('.detailsForm__btn--manual').hide();
+            $('.detailsFormField--hidden').slideDown(500);
+            $('.detailsForm__seperator--hidden').slideDown(500);
+            $('.detailsForm__title--hidden').slideDown(500);
+            $('.setupForm__nextBtn').removeClass('setupForm__nextBtn--inactive');
+            $('#addressLine1').valid();
+            $('#addressCity').valid();
+            $('#addressState').valid();
+            $('#addressZipCode').valid();
+        });
+    });
+
+};

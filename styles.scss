@@ -318,6 +318,12 @@ body {
                     font-weight: 300;
                     font-family: $lato;
                     transition: all .3s ease;
+
+                    &--stay {
+                        top: -30px;
+                        font-size: 12px;
+                        left: 0px;
+                    }
                 }
 
                 &__radio {

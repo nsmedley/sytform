@@ -52,7 +52,7 @@
                     </div>
 
                     <div class="detailsFormField">
-                        <input type="email" class="detailsFormField__input" id="email" name="email" placeholder="Email" autocomplete="email" required>
+                        <input type="text" class="detailsFormField__input" id="email" name="email" placeholder="Email" autocomplete="email" required>
                         <label for="email" class="detailsFormField__label">Email</label>
                     </div>
 
@@ -67,7 +67,7 @@
                     </div>
 
                     <div class="detailsFormField">
-                        <input type="url" class="detailsFormField__input" id="website" name="website" placeholder="Website" autocomplete="url" required>
+                        <input type="text" class="detailsFormField__input" id="website" name="website" placeholder="Website" autocomplete="url" required>
                         <label for="website" class="detailsFormField__label">Website</label>
                     </div>
 
@@ -76,14 +76,14 @@
                     <h2 class="detailsForm__title detailsForm__title--address">Your address</h2>
 
                     <div class="detailsFormField">
-                        <input type="text" class="detailsFormField__input" id="address" name="address" placeholder="Start typing your address to search...">
+                        <input type="text" class="detailsFormField__input ignore" id="address" name="address" placeholder="Start typing your address to search...">
                         <label for="address" class="detailsFormField__label">Start typing your address to search...</label>
                     </div>
 
                     <span class="manualOr">or</span>
 
                     <div class="detailsForm__btn detailsForm__btn--manual">Enter address manually</div>
-                    <input type="text" class="" id="state" style="display: none;"></input>
+                    <input type="text" id="state" style="display: none;"></input>
 
                     <div class="detailsFormField detailsFormField--hidden">
                         <input type="text" class="detailsFormField__input" id="addressLine1" name="addressLine1" placeholder="Address" required>
@@ -200,7 +200,8 @@
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
     <script>(function(n,t,i,r){var u,f;n[i]=n[i]||{},n[i].initial={accountCode:"NSMED11112",host:"NSMED11112.pcapredict.com"},n[i].on=n[i].on||function(){(n[i].onq=n[i].onq||[]).push(arguments)},u=t.createElement("script"),u.async=!0,u.src=r,f=t.getElementsByTagName("script")[0],f.parentNode.insertBefore(u,f)})(window,document,"pca","//NSMED11112.pcapredict.com/js/sensor.js")</script>
     <script src="main.js"></script> 
 </html>
